@@ -37,7 +37,7 @@ use PPI ();
 
 use vars qw{$VERSION @EXPORT};
 BEGIN {
-	$VERSION = '0.01';
+	$VERSION = '0.02';
 	@EXPORT  = @File::Find::Rule::EXPORT;
 
 	# Preload PPI::Find module if needed and possible
@@ -79,7 +79,7 @@ sub File::Find::Rule::ppi_find_any {
 		require PPI::Find;
 		my $Find = shift;
 		return $self->exec( sub {
-				my $Document = PPI::Document->load($_) or return;
+				my $Document = PPI::Document->new($_) or return;
 				$Find->any_matches                     or return;
 				1;
 			} );
@@ -93,7 +93,7 @@ sub File::Find::Rule::ppi_find_any {
 
 	# Add the query for a valid condition
 	$self->exec( sub {
-			my $Document = PPI::Document->load($_) or return;
+			my $Document = PPI::Document->new($_) or return;
 			$Document->find_any( $condition )      or return;
 			1;
 		} );
