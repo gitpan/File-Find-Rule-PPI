@@ -1,18 +1,20 @@
+
+no_index: 
+  directory: 
+    - inc
+    - t
+generated_by: Module::Install version 0.62
+distribution_type: module
+version: 0.03
 name: File-Find-Rule-PPI
-version: 0.02
-abstract: rules to match on PPI queries
 author: Adam Kennedy <cpan@ali.as>
 license: perl
-distribution_type: module
-build_requires:
-  File::Spec: 0.82
+build_requires: 
   Test::More: 0.47
-requires:
-  perl: 5.005
-  PPI: 0.990
+  File::Spec: 0.80
+requires: 
+  PPI: 1.000
   File::Find::Rule: 0.20
-no_index:
-  directory:
-    - t.data
-    - inc
-generated_by: Module::Install version 0.36
+  perl: 5.005
+  Params::Util: 0.10
+abstract: Add support for PPI queries to File::Find::Rule

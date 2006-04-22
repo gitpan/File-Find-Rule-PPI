@@ -30,14 +30,15 @@ and checks each file as a perl document to see if matches the query.
 
 =cut
 
+use 5.005;
 use strict;
-use UNIVERSAL;
+use Params::Util '_INSTANCE';
 use base 'File::Find::Rule';
 use PPI ();
 
 use vars qw{$VERSION @EXPORT};
 BEGIN {
-	$VERSION = '0.02';
+	$VERSION = '0.03';
 	@EXPORT  = @File::Find::Rule::EXPORT;
 
 	# Preload PPI::Find module if needed and possible
@@ -75,12 +76,12 @@ sub File::Find::Rule::ppi_find_any {
 	my $self = shift()->_force_object;
 
 	# Is this a PPI::Find object
-	if ( UNIVERSAL::isa($_[0], 'PPI::Find') ) {
+	if ( _INSTANCE($_[0], 'PPI::Find') ) {
 		require PPI::Find;
 		my $Find = shift;
 		return $self->exec( sub {
 				my $Document = PPI::Document->new($_) or return;
-				$Find->any_matches                     or return;
+				$Find->any_matches                    or return;
 				1;
 			} );
 	}
@@ -113,7 +114,7 @@ For other issues, contact the maintainer
 
 =head1 AUTHOR
 
-Adam Kennedy (Maintainer), L<http://ali.as/>, cpan@ali.as
+Adam Kennedy E<lt>cpan@ali.asE<gt>
 
 =head1 ACKNOWLEDGMENTS
 
@@ -121,11 +122,11 @@ Funding provided by The Perl Foundation
 
 =head1 SEE ALSO
 
-L<File::Find::Rule>, L<PPI>, L<http://sourceforge.net/projects/parseperl/>
+L<http://ali.as/>, L<File::Find::Rule>, L<PPI>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005 Adam Kennedy. All rights reserved.
+Copyright (c) 2005, 2006 Adam Kennedy. All rights reserved.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.

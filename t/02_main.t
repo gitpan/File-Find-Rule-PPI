@@ -4,7 +4,6 @@
 
 use strict;
 use lib ();
-use UNIVERSAL 'isa';
 use File::Spec::Functions ':ALL';
 BEGIN {
 	$| = 1;
@@ -12,12 +11,16 @@ BEGIN {
 		require FindBin;
 		$FindBin::Bin = $FindBin::Bin; # Avoid a warning
 		chdir catdir( $FindBin::Bin, updir() );
-		lib->import('blib', 'lib');
+		lib->import(
+			catdir('blib', 'arch'),
+			catdir('blib', 'lib' ),
+			catdir('lib'),
+			);
 	}
 }
 
 use Test::More tests => 4;
-use File::Find::Rule ();
+use File::Find::Rule      ();
 use File::Find::Rule::PPI ();
 
 # Find perl files with whitespace in them
@@ -28,7 +31,7 @@ my $Rule = File::Find::Rule->file
 isa_ok( $Rule, 'File::Find::Rule' );
 
 # They all should
-my @files = $Rule->in( 't.data' );
+my @files = $Rule->in( catdir('t', 'data') );
 @files = sort @files;
 is_deeply( \@files, [ 'Bar.pm', 'Foo.pm', catfile('dir', 'Baz.pm') ],
 	'Whitespace search returns expected file list' );
@@ -41,7 +44,7 @@ $Rule = File::Find::Rule->file
 isa_ok( $Rule, 'File::Find::Rule' );
 
 # They all should
-@files = $Rule->in( 't.data' );
+@files = $Rule->in( catdir('t', 'data') );
 @files = sort @files;
 is_deeply( \@files, [ 'Bar.pm', catfile('dir', 'Baz.pm') ],
 	'Comment search returns expected file list' );
