@@ -1,10 +1,10 @@
 abstract: Add support for PPI queries to File::Find::Rule
-author: Adam Kennedy <cpan@ali.as>
+author: Adam Kennedy <adamk@cpan.org>
 build_requires: 
   File::Spec: 0.80
   Test::More: 0.47
 distribution_type: module
-generated_by: Module::Install version 0.63
+generated_by: Module::Install version 0.64
 license: perl
 name: File-Find-Rule-PPI
 no_index: 
@@ -16,4 +16,4 @@ requires:
   PPI: 1.000
   Params::Util: 0.10
   perl: 5.005
-version: 0.04
+version: 0.05
